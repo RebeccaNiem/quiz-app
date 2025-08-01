@@ -1,25 +1,105 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  const questions = [
+    {
+      question: "What does HTML stand for?",
+      options: [
+        "HyperText Markup Language",
+        "Home Tool Markup Language",
+        "Hyper Transfer Markup Language",
+        "Hyperlink Text Management Language",
+      ],
+      correctAnswer: "HyperText Markup Language",
+    },
+    {
+      question: "Which language runs in a web browser?",
+      options: ["Java", "C", "Python", "JavaScript"],
+      correctAnswer: "JavaScript",
+    },
+    {
+      question: "What does CSS stand for?",
+      options: [
+        "Computer Style Sheets",
+        "Creative Style Syntax",
+        "Cascading Style Sheets",
+        "Colorful Style Structure",
+      ],
+      correctAnswer: "Cascading Style Sheets",
+    },
+    {
+      question: "Which of these is a JavaScript framework?",
+      options: ["Laravel", "Django", "React", "Flask"],
+      correctAnswer: "React",
+    },
+    {
+      question: "What year was JavaScript created?",
+      options: ["1991", "1995", "1999", "2005"],
+      correctAnswer: "1995",
+    },
+  ];
 
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+
+  function handleAnswer(selectedOption) {
+    const correctAnswer = questions[currentQuestion].correctAnswer;
+
+    if (selectedOption === correctAnswer) {
+      setScore(score + 1);
+    }
+
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < questions.length) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setShowResult(true);
+    }
+  }
+
+  function restartQuiz() {
+    setCurrentQuestion(0);
+    setScore(0);
+    setShowResult(false);
+  }
+
+  if (showResult === true) {
+    return (
+      <div>
+        <h1>Quiz App</h1>
+        <h2>
+          Final Score:{score}/{questions.length}
+        </h2>
+        <button onClick={restartQuiz}>Restart the quiz</button>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <h1>Quiz App</h1>
+        <h3>Question{currentQuestion + 1}</h3>
+        <p>{questions[currentQuestion].question}</p>
+
+        <ul>
+          {questions[currentQuestion].options.map(function (option) {
+            return (
+              <li key={option}>
+                <button
+                  onClick={function () {
+                    handleAnswer(option);
+                  }}
+                >
+                  {option}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  }
+}
 export default App;
