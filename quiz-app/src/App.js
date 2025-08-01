@@ -68,22 +68,24 @@ function App() {
 
   if (showResult === true) {
     return (
-      <div>
-        <h1>Quiz App</h1>
-        <h2>
+      <div className="quiz-container">
+        <h1 className="quiz-title">Quiz App</h1>
+        <h2 className="result-score">
           Final Score:{score}/{questions.length}
         </h2>
-        <button onClick={restartQuiz}>Restart the quiz</button>
+        <button className="restart-button" onClick={restartQuiz}>
+          Restart the quiz
+        </button>
       </div>
     );
   } else {
     return (
-      <div>
+      <div className="question-section">
         <h1>Quiz App</h1>
-        <h3>Question{currentQuestion + 1}</h3>
-        <p>{questions[currentQuestion].question}</p>
+        <h3 className="question-count">Question{currentQuestion + 1}</h3>
+        <p className="question-text">{questions[currentQuestion].question}</p>
 
-        <ul>
+        <ul className="options-list">
           {questions[currentQuestion].options.map(function (option) {
             return (
               <li key={option}>
